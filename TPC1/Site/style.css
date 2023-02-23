@@ -1,22 +1,60 @@
 * {
-    margin: 0
+    margin: 0;
+    font-size: 25px;
+}
+
+h1 { 
+    font-size: 60px;
+}
+
+h2 {
+    font-size: 50px;
+    text-decoration:double;
+}
+
+body {
+    background-color: cornflowerblue;
 }
 
 .title {
-    margin: 20px 0;
+    padding: 20px 0;
 }
 
 .content{
-    margin: 40px;
+    margin: 0 40px;
+    padding-bottom: 10px;
 }
 
 .content p {
     text-align: justify;
 }
 
+.details-list {
+    margin: 10px;
+}
+
+.details-list ul {
+    display: block
+}
+
+.details-flag img {
+    float: right;
+}
+
+.details-flag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .cities-grid{
     display: grid;
     grid-template-columns: 50% 50%;
+}
+
+.cities-grid a {
+    text-decoration: none;
+    color: blue
 }
 
 .city {
@@ -25,15 +63,51 @@
 
 .city img {
     margin-top: 10px;
-    width: 90%;
+    width: 100%;
     height: 80%;
 }
 
-.city a {
+.city p {
     text-decoration: none;
-    color: blue
+    color: white
 }
 
 .headers {
     margin: 10px 0;
 }
+
+.map-grid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+}
+
+.map-grid table {
+    margin-top: 10px;
+}
+
+.map-grid td{
+    font-size: 40px;
+}
+
+.map-grid a{
+    font-size: 40px;
+    text-decoration: none;
+    color: purple
+}
+
+.map-wrapper  {
+    border-radius: 3rem;
+    border: solid;
+    border-color: grey;
+}
+
+.footer {
+    background-image: linear-gradient(to bottom, cornflowerblue -10%, white);
+    padding: 30px;
+}
+
+.footer p {
+    display: inline-block;
+    margin-right: 40px;
+}
+
