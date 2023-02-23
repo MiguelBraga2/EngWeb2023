@@ -1,0 +1,39 @@
+* {
+    margin: 0
+}
+
+.title {
+    margin: 20px 0;
+}
+
+.content{
+    margin: 40px;
+}
+
+.content p {
+    text-align: justify;
+}
+
+.cities-grid{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.city {
+    text-align: center;
+}
+
+.city img {
+    margin-top: 10px;
+    width: 90%;
+    height: 80%;
+}
+
+.city a {
+    text-decoration: none;
+    color: blue
+}
+
+.headers {
+    margin: 10px 0;
+}
