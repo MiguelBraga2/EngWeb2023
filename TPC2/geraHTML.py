@@ -14,15 +14,19 @@ cidades.sort(key=ordCidade) # Ordenar as cidades
 
 ligacoes = mapa["ligações"] # Pegar nas ligações
 
-cidades_dict = {} # Facilitar o acesso ao nome da cidade a partir do id 
+cidades_dict = {} # Facilitar o acesso ao id a partir do nome da cidade
+cidades_dict_id = {} # nome através do id
 distritos = {} # Para cada distrito, as cidades correspondentes
 
 # Mapeia o id de cada cidade para o seu nome
 for cidade in cidades:
-    if cidade["id"] not in cidades_dict:
-        cidades_dict[cidade["id"]] = cidade
+    if cidade["nome"] not in cidades_dict:
+        cidades_dict[cidade["nome"]] = cidade
+
+    if cidade["id"] not in cidades_dict_id:
+        cidades_dict_id[cidade["id"]] = cidade
     
-        distrito = cidade["distrito"]
+    distrito = cidade["distrito"]
     if distrito not in distritos:
         distritos[distrito] = list()
 
@@ -72,7 +76,7 @@ for d in distritos_sorted:
     for cidade in distritos[d]:
         pagHTML += f"""
                 <li>
-                    <a href="localhost:7777/{cidade}">{cidade}</a>
+                    <a href="{cidades_dict[cidade]["id"]}">{cidade}</a>
                 </li>
         """
 
@@ -90,8 +94,8 @@ pagHTML += """
 index_file = open("index.html", mode="w")
 index_file.write(pagHTML)
 
-for cidade_id in cidades_dict.keys():
-    cidade = cidades_dict[cidade_id]
+for cidade_nome in cidades_dict.keys():
+    cidade = cidades_dict[cidade_nome]
     new_file = open("cidades/" + cidade["id"] + ".html", mode="w")
     pagHTML = """<!DOCTYPE html>
                 <html>
@@ -108,7 +112,7 @@ for cidade_id in cidades_dict.keys():
     if cidade["id"] in origens:
         for o in origens[cidade["id"]]:
             pagHTML += f""" <li>
-                                <a href="localhost:7777/{o[0]}">{cidades_dict[o[0]]["nome"]} - {o[1]}</a> 
+                                <a href="{o[0]}">{cidades_dict_id[o[0]]["nome"]} - {o[1]}</a> 
                             </li>
                         """
     
@@ -121,12 +125,13 @@ for cidade_id in cidades_dict.keys():
     if cidade["id"] in destinos:
         for d in destinos[cidade["id"]]:
             pagHTML += f""" <li>
-                                <a href="localhost:7777/{d[0]}">{cidades_dict[d[0]]["nome"]} - {d[1]}</a>
+                                <a href="{d[0]}">{cidades_dict_id[d[0]]["nome"]} - {d[1]}</a>
                             </li>
                         """
     
     pagHTML += f"""
                     </ul>
+                    <a href="/">Voltar ao índice</a>
                 </body>
                 </html>
                 """
