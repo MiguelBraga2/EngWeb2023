@@ -11,6 +11,7 @@ var fs = require('fs');
 var myServer = http.createServer(function (req, res) { 
     var q = url.parse(req.url, true) // Parse (true - dá como resultado um dicionário, false - ...)
     var regex = new RegExp("/c?[0-9]*$")
+    console.log("URL: " + q.pathname);
     if (q.pathname == "/"){
         fs.readFile('index.html', function(err,data) { // Callback anonymous function; params: err - , data - informação do ficheiro
             res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'}); // 2 configs no cabeçalho (código 200 e content-type (inclui charset))

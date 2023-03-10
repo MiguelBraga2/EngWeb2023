@@ -28,6 +28,17 @@ function sportDistribution(pessoas) {
     return d
 }
 
+function profissoesDistribution(pessoas) {
+    var d = {}
+
+    for(let i=0; i < pessoas.length; i++){
+        var pessoa = pessoas[i]
+        d[pessoa.profissao] = (d[pessoa.profissao] || 0) + 1     
+    }
+
+    return d
+}
+
 function compareEntries(a, b) {
     return b[1] - a[1]
 }
@@ -103,8 +114,44 @@ http.createServer(function (req, res) {
                 res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
                 var dist = sexDistribution(pessoas)
                 console.log(Object.keys(dist))
-                res.end(mypages.genDistributionPage(dist, d, "sexo", Object.keys(dist)))
+                res.end(mypages.genDistributionPage(dist, d, "sexo", Object.keys(dist), req.url))
                 //console.log(d)
+            })
+            .catch(erro => {
+                console.log("Erro: " + erro)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
+            })
+    }
+    else if (req.url.match(/\/sexo\?sexo=\w*$/)){
+        axios.get('http://localhost:3000/pessoas?sexo=' + req.url.substring(11))
+            .then(function(resp){
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end(mypages.genMainPage(resp.data, d))
+            })
+            .catch(erro => {
+                console.log("Erro: " + erro)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
+            })
+    }
+    else if (req.url.match(/\/desporto\?desporto=.*$/)){
+        axios.get('http://localhost:3000/pessoas?desportos_like=' + req.url.substring(19))
+            .then(function(resp){
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end(mypages.genMainPage(resp.data, d))
+            })
+            .catch(erro => {
+                console.log("Erro: " + erro)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
+            })
+    }
+    else if (req.url.match(/\/profissoes\?profissao=.*$/)){
+        axios.get('http://localhost:3000/pessoas?profissao=' + req.url.substring(22))
+            .then(function(resp){
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end(mypages.genMainPage(resp.data, d))
             })
             .catch(erro => {
                 console.log("Erro: " + erro)
@@ -121,7 +168,23 @@ http.createServer(function (req, res) {
                 var entries = Object.entries(dist)
                 entries.sort(compareEntries)
                 console.log(entries.map(e => e[0]))
-                res.end(mypages.genDistributionPage(dist, d, "desporto", entries.map(e => e[0])))
+                res.end(mypages.genDistributionPage(dist, d, "desporto", entries.map(e => e[0]), req.url))
+            })
+            .catch(erro => {
+                console.log("Erro: " + erro)
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                res.end('<p>Erro na obtenção de dados: ' + erro + '</p>')
+            })
+    }
+    else if (req.url == "/profissoes"){
+        axios.get('http://localhost:3000/pessoas')
+            .then(function(resp){
+                var pessoas = resp.data
+                res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+                var dist = profissoesDistribution(pessoas)
+                var entries = Object.entries(dist)
+                entries.sort(compareEntries)
+                res.end(mypages.genDistributionPage(dist, d, "profissao", entries.map(e => e[0]).slice(0, 10), req.url))
             })
             .catch(erro => {
                 console.log("Erro: " + erro)

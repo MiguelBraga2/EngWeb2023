@@ -71,9 +71,20 @@ exports.genPersonPage = function(p, d){
 
                 <div class="container w3-margin-left" >
                     <p><b>Idade</b>: ${p.idade}</p>
-                    <p><b>Sexo</b>: ${p.idade}</p>
-                    <p><b>Morada</b>: ${p.morada.cidade} - ${p.morada.distrito}</p>
-                    <p><b>BI</b>: ${p.BI}</p>
+                    <p><b>Sexo</b>: ${p.sexo}</p>
+                    <p><b>Morada</b>: ${p.morada.cidade} - ${p.morada.distrito}</p>`
+    var idcard
+    var idtype
+    if (p.BI != undefined){
+        idtype = "BI"
+        idcard = p.BI
+    }
+    else if (p.CC != undefined){
+        idtype = "CC"
+        idcard = p.CC
+    }
+    pagHTML += `
+                    <p><b>${idtype}</b>: ${idcard}</p>
                     <p><b>Profissão</b>: ${p.profissao}</p>
                     <p><b>Partido político</b>: ${p.partido_politico.party_abbr} :  ${p.partido_politico.party_name}</p>
                     <p><b>Religião</b>: ${p.religiao}</p>
@@ -82,8 +93,17 @@ exports.genPersonPage = function(p, d){
                     <p><b>Figuras Publicas PT</b>: ${p.figura_publica_pt}</p>
                     <p><b>Marca de Carro</b>: ${p.marca_carro}</p>
                     <p><b>Destinos favoritos</b>: ${p.destinos_favoritos}</p>
-                    <p><b>Atributos</b>: ${p.atributos}</p>
-    `
+                    <h4><b>Atributos: </b></h4>
+                    <p><b>Fumador</b>: ${p.atributos.fumador}</p>
+                    <p><b>Gosta de Cinema</b>: ${p.atributos.gosta_cinema}</p>
+                    <p><b>Gosta de Viajar</b>: ${p.atributos.gosta_viajar}</p>
+                    <p><b>Acorda cedo</b>: ${p.atributos.acorda_cedo}</p>
+                    <p><b>Gosta de Ler</b>: ${p.atributos.gosta_ler}</p>
+                    <p><b>Gosta de Musica</b>: ${p.atributos.gosta_musica}</p>
+                    <p><b>Gosta de Comer</b>: ${p.atributos.gosta_comer}</p>
+                    <p><b>Gosta de Animais Estimacao</b>: ${p.atributos.gosta_animais_estimacao}</p>
+                    <p><b>Gosta de Dancar</b>: ${p.atributos.gosta_dancar}</p>
+                    <p><b>Comida favorita</b>: ${p.atributos.comida_favorita}</p>`
 
     pagHTML += `</div>
                 <footer class="w3-container w3-purple">
@@ -112,7 +132,7 @@ exports.genIndex = function() {
                 <a href="/pessoasOrdenadas" class="w3-bar-item w3-button">Lista de pessoas ordenadas</a>
                 <a href="/sexo" class="w3-bar-item w3-button">Distribuição por sexo</a>
                 <a href="/desporto" class="w3-bar-item w3-button">Distribuição por desporto</a>
-                <a href="#" class="w3-bar-item w3-button">Top 10 profissões</a>
+                <a href="/profissoes" class="w3-bar-item w3-button">Top 10 profissões</a>
             </div>
             <div class="w3-teal">
                 <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
@@ -134,7 +154,7 @@ exports.genIndex = function() {
     return pagHTML
 }
 
-exports.genDistributionPage = function(dist, data, tipo, keys){
+exports.genDistributionPage = function(dist, data, tipo, keys, path){
     var pagHTML = `
     <!DOCTYPE html>
     <html>
@@ -159,7 +179,7 @@ exports.genDistributionPage = function(dist, data, tipo, keys){
     for(let i=0; i<keys.length; i++){
         pagHTML += `
                     <tr>
-                        <td>${keys[i]}</td>
+                        <td><a href="${path}?${tipo}=${keys[i]}">${keys[i]}</a></td>
                         <td>${dist[keys[i]]}</td>
                     </tr>
         `
