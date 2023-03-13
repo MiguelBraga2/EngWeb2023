@@ -28,9 +28,12 @@ var tasks_server = http.createServer(function (req, res){
     switch (req.method){
         case "GET":
             if (req.url == '/'){
-                console.log(req.url)
-                res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
-                res.end(templates.genMainPage())
+                axios.get('http://localhost:3000/tasks')
+                    .then(resp => {
+                        res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'})
+                        console.log(resp.data)
+                        res.end(templates.genMainPage(resp.data))
+                    })
             }
             else if (req.url == "/w3.css"){
                 fs.readFile('./w3.css', function(err, data){
@@ -43,6 +46,15 @@ var tasks_server = http.createServer(function (req, res){
                         res.end(data)
                     }
                 })
+            }
+            else if (/\/do\/[0-9]+$/i.test(req.url)){
+                var taskId = req.url.substring(4)
+                axios.get('http://localhost:3000/tasks/' + taskId)
+                    .then(resp => {
+                        resp.data.done = "true"
+                        axios.put('http://localhost:3000/tasks/' + taskId, resp.data)
+                    })
+                
             }
             break
         case "POST":

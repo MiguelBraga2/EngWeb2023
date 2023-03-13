@@ -4,7 +4,7 @@
 // Description - 
 // Duedate - 
 
-exports.genMainPage = function(){
+exports.genMainPage = function(tasks, completed){
     var pagHTML = `
         <!DOCTYPE html>
         <html>
@@ -26,7 +26,32 @@ exports.genMainPage = function(){
                         <button type="submit">Submit</button>
                     </form>
                 </div>
-                
+                <div class="w3-row"> 
+                    <div class="w3-col m6 l6">
+                        <center><h3>TO DO</h3></center>
+                        <ul>
+                `
+    for(let i=0; i<tasks.length; i++){
+        pagHTML += `        
+                            <li>
+                                <div>
+                                    <p>${tasks[i].description}</p>
+                                    <a href="delete/${tasks[i].id}">[DELETE]</a>
+                                    <a href="edit/${tasks[i].id}">[EDIT]</a>
+                                    <a href="do/${tasks[i].id}">[Update]</a>
+                                </div>
+                            </li>
+        `
+    }
+
+    pagHTML += `            
+                        </ul>
+                    </div>
+
+                    <div class="w3-col m6 l6">
+                        <center><h3>DONE</h3></center>
+                    </div>
+                </div>                
             </body>
         </html>
     
