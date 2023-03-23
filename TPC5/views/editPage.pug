@@ -6,15 +6,19 @@ block content
   .w3-card-4 
     form.w3-container(method="POST")
       p
+        label.w3-text-blue #[b Id]
+        input.w3-input.w3-border.w3-light-gray(name="id" type="text" value=task.id readonly)
+      p
+      p
         label.w3-text-blue #[b Name]
-        input.w3-input.w3-border.w3-light-gray(name="who" type="text")
+        input.w3-input.w3-border.w3-light-gray(name="who" type="text" value=task.who)
       p
         label.w3-text-blue #[b Description]
-        textarea.w3-input.w3-border.w3-light-gray(name="description")
+        textarea.w3-input.w3-border.w3-light-gray(name="description") #{task.description}
       p
         label.w3-text-blue #[b Name]
-        input.w3-input.w3-border.w3-light-gray(name="due_date" type="date")
-      button.w3-btn.w3-blue.w3-margin-bottom(type="submit") Register task
+        input.w3-input.w3-border.w3-light-gray(name="due_date" type="date" value=task.due_date)
+      button.w3-btn.w3-blue.w3-margin-bottom(type="submit" action) Update task
       
   .w3-row.w3-card-4
     .w3-col.l6
