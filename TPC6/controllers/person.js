@@ -21,3 +21,24 @@ module.exports.addPerson = person => {
                     return erro
                 })
 }
+
+module.exports.deletePerson = id => {
+    return Person.deleteOne({_id: id})
+                .then(resposta => {
+                    return resposta
+                })
+                .catch(erro => {
+                    return erro
+                })
+}
+
+module.exports.updatePerson = person => {
+    return Person.updateOne({_id: person.id}, person)
+                .then(resposta => {
+                    return resposta
+                })
+                .catch(erro => {
+                    return erro
+                })
+}
+
