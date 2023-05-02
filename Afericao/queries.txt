@@ -1,0 +1,6 @@
+db.exames.count()
+db.exames.find({resultado: true}).count()
+db.exames.aggregate([{'$group' : {'_id' : '$género', 'count': {'$sum': 1}}}])
+db.exames.aggregate([{'$group' : {'_id' : '$modalidade', 'count': {'$sum': 1}}}])
+db.exames.find({clube: "GDGoma", federado: true}).count()
+db.exames.find({género: 'F', modalidade: 'Triatlo'}).count()
